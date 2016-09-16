@@ -24,6 +24,13 @@ func HandleRoot(w http.ResponseWriter, r* http.Request) {
 }
 
 
+func HandleImage(w http.ResponseWriter, r* http.Request) {
+  imageName := r.FormValue("name")
+  image := images[imageName]
+  jpeg.Encode(w, image, &jpeg.Options{Quality: jpeg.DefaultQuality})
+}
+
+
 func HandleUpload(w http.ResponseWriter, r* http.Request) {
   file, header, _ := r.FormFile("image")
   image, _, _ := image.Decode(file)
@@ -39,6 +46,7 @@ func HandleEditor(w http.ResponseWriter, r* http.Request) {
 func main() {
   http.HandleFunc("/", HandleRoot)
   http.HandleFunc("/upload", HandleUpload)
+  http.HandleFunc("/image", HandleImage)
   http.HandleFunc("/editor", HandleEditor)
 
   http.ListenAndServe(":8000", nil)
