@@ -31,6 +31,10 @@ func HandleUpload(w http.ResponseWriter, r* http.Request) {
   http.Redirect(w, r, "/editor?name=" + header.Filename, 303)
 }
 
+func HandleEditor(w http.ResponseWriter, r* http.Request) {
+  templates.ExecuteTemplate(w, "editor.html", r.FormValue("name"))
+}
+
 
 func main() {
   http.HandleFunc("/", HandleRoot)
