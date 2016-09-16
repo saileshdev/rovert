@@ -7,6 +7,12 @@ import (
   "image/jpeg"
 )
 
+var (
+  images = make(map[string]image.Image)
+  templates *template.Template
+)
+
+
 func HandleRoot(w http.ResponseWriter, r* http.Request) {
     templates.ExecuteTemplate(w, "root.html", nil)
 }
