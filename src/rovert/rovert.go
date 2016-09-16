@@ -23,6 +23,15 @@ func HandleRoot(w http.ResponseWriter, r* http.Request) {
     templates.ExecuteTemplate(w, "root.html", nil)
 }
 
+
+func HandleUpload(w http.ResponseWriter, r* http.Request) {
+  file, header, _ := r.FormFile("image")
+  image, _, _ := image.Decode(file)
+  images[header.Filename] = image
+  http.Redirect(w, r, "/editor?name=" + header.Filename, 303)
+}
+
+
 func main() {
   http.HandleFunc("/", HandleRoot)
   http.HandleFunc("/upload", HandleUpload)
