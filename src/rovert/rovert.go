@@ -25,4 +25,5 @@ func HandleRoot(w http.ResponseWriter, r* http.Request) {
 
 func main() {
   http.HandleFunc("/", HandleRoot)
+  http.HandleFunc("/upload", HandleUpload)
 }
