@@ -5,3 +5,8 @@ import (
 )
 
 type Rotate struct {}
+
+func init() {
+  r := new(Rotate)
+  RegisterTransformer("rotate", r)
+}
