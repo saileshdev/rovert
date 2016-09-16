@@ -43,6 +43,14 @@ func HandleEditor(w http.ResponseWriter, r* http.Request) {
 }
 
 
+func HandleTransform(w http.ResponseWriter, r *http.Request) {
+  name := r.FormValue("name")
+  transformation := r.FormValue("transformation")
+  images[name] = transform.GetTransformer(transformation).Transform(images[name])
+  http.Redirect(w, r, "/editor?name=" + name, 303)
+}
+
+
 func main() {
   http.HandleFunc("/", HandleRoot)
   http.HandleFunc("/upload", HandleUpload)
