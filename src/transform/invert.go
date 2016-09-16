@@ -7,10 +7,11 @@ import (
 
 type Invert struct {}
 
-func init() {
-  i := new(Invert)
-  RegisterTransformer("invert", i)
+func (r Invert) invert(c color.Color) color.Color {
+  R, G, B, A := c.RGBA()
+  return color.NRGBA{R: 255 - uint8(R), G: 255 - uint8(G), B: 255 - uint8(B), A: uint8(A)}
 }
+
 
 func (r Invert) Transform(i image.Image) image.Image {
   inverted := image.NewRGBA(i.Bounds())
@@ -20,4 +21,10 @@ func (r Invert) Transform(i image.Image) image.Image {
     }
   }
   return inverted.SubImage(i.Bounds())
+}
+
+
+func init() {
+  i := new(Invert)
+  RegisterTransformer("invert", i)
 }
