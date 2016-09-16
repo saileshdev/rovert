@@ -40,4 +40,6 @@ func main() {
   http.HandleFunc("/", HandleRoot)
   http.HandleFunc("/upload", HandleUpload)
   http.HandleFunc("/editor", HandleEditor)
+
+  http.ListenAndServe(":8000", nil)
 }
