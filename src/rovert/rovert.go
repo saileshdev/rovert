@@ -5,6 +5,7 @@ import (
   "net/http"
   "image"
   "image/jpeg"
+  "transform"
 )
 
 var (
@@ -23,6 +24,12 @@ func HandleRoot(w http.ResponseWriter, r* http.Request) {
     templates.ExecuteTemplate(w, "root.html", nil)
 }
 
+func HandleUpload(w http.ResponseWriter, r* http.Request) {
+  file, header, _ := r.FormFile("image")
+  image, _, _ := image.Decode(file)
+  images[header.Filename] = image
+  http.Redirect(w, r, "/editor?name=" + header.Filename, 303)
+}
 
 func HandleImage(w http.ResponseWriter, r* http.Request) {
   imageName := r.FormValue("name")
@@ -30,13 +37,6 @@ func HandleImage(w http.ResponseWriter, r* http.Request) {
   jpeg.Encode(w, image, &jpeg.Options{Quality: jpeg.DefaultQuality})
 }
 
-
-func HandleUpload(w http.ResponseWriter, r* http.Request) {
-  file, header, _ := r.FormFile("image")
-  image, _, _ := image.Decode(file)
-  images[header.Filename] = image
-  http.Redirect(w, r, "/editor?name=" + header.Filename, 303)
-}
 
 func HandleEditor(w http.ResponseWriter, r* http.Request) {
   templates.ExecuteTemplate(w, "editor.html", r.FormValue("name"))
