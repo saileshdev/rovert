@@ -1,13 +1,15 @@
 # Rovert
 
-A utility program written in Go which perform a few image operations.
+A utility program written in Go which performs image operations.
 
 
 ## Getting started
 
 ```
+$ git clone https://github.com/saileshdev/rovert
+$ cd rovert/
 $ export GOPATH=`pwd` 
-$ go build rovert
+$ go install rovert
 $ bin/rovert
 ```
 
